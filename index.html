@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Lab - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-area">CYBER_LAB_OS</div>
+        <a href="index.html" class="nav-item active">Dashboard</a>
+        <a href="chat.html" class="nav-item">AI Assistant</a>
+        <a href="memory.html" class="nav-item">Memory Core</a>
+        <div class="sidebar-footer">v2.0 Multi-Page<br>Token Optimized</div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>System Dashboard</h1>
+            <p>Overview of API status, memory sync, and active routes.</p>
+        </div>
+
+        <div class="token-display">
+            <span class="label">RANDOM ACTIVE TOKEN:</span>
+            <span id="currentTokenValue" class="token-value">None</span>
+            <button id="toggleTokenBtn" class="btn" onclick="toggleTokenVisibility()">Show</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+            <div class="card">
+                <div class="card-header"><span>SYSTEM_STATUS</span></div>
+                <p style="color:var(--accent-green); margin-bottom:10px;">● Online</p>
+                <p style="font-size:13px; color:var(--text-muted);">Router connected to HuggingFace. Random token distribution is active to prevent rate limits.</p>
+                <a href="chat.html" class="btn" style="margin-top:15px; display:inline-block;">Launch Assistant</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header"><span>MEMORY_CORE</span></div>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Core instructions are loaded from GitHub raw repository and synced with local storage.</p>
+                <a href="memory.html" class="btn" style="display:inline-block;">Manage Memory</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize token display for dashboard
+        window.addEventListener("DOMContentLoaded", () => {
+            currentTokenIndex = getRandomKeyIndex();
+            updateTokenDisplay();
+        });
+    </script>
+</body>
+</html>
