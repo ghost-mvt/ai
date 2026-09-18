@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Lab - Memory Core</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-area">CYBER_LAB_OS</div>
+        <a href="index.html" class="nav-item">Dashboard</a>
+        <a href="chat.html" class="nav-item">AI Assistant</a>
+        <a href="memory.html" class="nav-item active">Memory Core</a>
+        <div class="sidebar-footer">v2.0 Multi-Page<br>Token Optimized</div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>Memory Core Management</h1>
+            <p>View and edit system core instructions. Changes are saved locally.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span>SYSTEM_INSTRUCTIONS</span>
+                <button class="btn" onclick="saveMemory()">Save Changes</button>
+            </div>
+            <textarea id="memoryEditor" class="memory-input" placeholder="Loading memory..."></textarea>
+            <p id="memoryStatus" style="margin-top:10px; font-size:12px; color:var(--text-muted);"></p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            loadMemoryToEditor();
+        });
+
+        function loadMemoryToEditor() {
+            const editor = document.getElementById("memoryEditor");
+            const status = document.getElementById("memoryStatus");
+            editor.value = userCoreInstructions || "No memory data found.";
+            status.innerText = "Loaded from local cache. Fetching latest from GitHub...";
+            
+            syncMemoryFile().then(() => {
+                editor.value = userCoreInstructions;
+                status.innerText = "Synced successfully with GitHub raw repository.";
+                status.style.color = "var(--accent-green)";
+            });
+        }
+
+        function saveMemory() {
+            const editor = document.getElementById("memoryEditor");
+            const status = document.getElementById("memoryStatus");
+            updateMemoryFile(editor.value);
+            status.innerText = "Core Instructions saved locally.";
+            status.style.color = "var(--accent-green)";
+        }
+    </script>
+</body>
+</html>
