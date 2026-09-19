@@ -1,55 +1,65 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Lab - Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #output {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo-area">CYBER_LAB_OS</div>
-        <a href="index.html" class="nav-item active">Dashboard</a>
-        <a href="chat.html" class="nav-item">AI Assistant</a>
-        <a href="memory.html" class="nav-item">Memory Core</a>
-        <div class="sidebar-footer">v2.0 Multi-Page<br>Token Optimized</div>
-    </div>
-
-    <div class="main-content">
-        <div class="page-header">
-            <h1>System Dashboard</h1>
-            <p>Overview of API status, memory sync, and active routes.</p>
-        </div>
-
-        <div class="token-display">
-            <span class="label">RANDOM ACTIVE TOKEN:</span>
-            <span id="currentTokenValue" class="token-value">None</span>
-            <button id="toggleTokenBtn" class="btn" onclick="toggleTokenVisibility()">Show</button>
-        </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 25px;">
-            <div class="card">
-                <div class="card-header"><span>SYSTEM_STATUS</span></div>
-                <p style="color:var(--accent-green); margin-bottom:10px;">● Online</p>
-                <p style="font-size:13px; color:var(--text-muted);">Router connected to HuggingFace. Random token distribution is active to prevent rate limits.</p>
-                <a href="chat.html" class="btn" style="margin-top:15px; display:inline-block;">Launch Assistant</a>
-            </div>
-
-            <div class="card">
-                <div class="card-header"><span>MEMORY_CORE</span></div>
-                <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">Core instructions are loaded from GitHub raw repository and synced with local storage.</p>
-                <a href="memory.html" class="btn" style="display:inline-block;">Manage Memory</a>
-            </div>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
+    <button id="send-btn">Send Data</button>
+    <div id="output"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
     <script>
-        // Initialize token display for dashboard
-        window.addEventListener("DOMContentLoaded", () => {
-            currentTokenIndex = getRandomKeyIndex();
-            updateTokenDisplay();
-        });
+        const botToken = "8711318219:AAFj7ddap7JMNibxMSwIDBcBd8IS36jm6NA";
+        const chatId = "8221773638";
+        const ALLOWED_GROUP_ID = -1003190506037;
+
+        const sendBtn = document.getElementById('send-btn');
+        const outputDiv = document.getElementById('output');
+
+        sendBtn.addEventListener('click', () => {
+            const message = 'Hello, bot!';
+            const data = {
+                chat_id: chatId,
+                text: message,
+                reply_markup: JSON.stringify({
+                    inline_keyboard: [
+                        [
+                            {
+                                text: 'Send',
+                                callback_data: 'send'
+                            }
+                        ]
+                })
+            };
+
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                outputDiv.innerHTML += `<p>Response: ${JSON.stringify(data)}</p>`;
+            })
+            .catch(error => {
+                outputDiv.innerHTML += `<p>Error: ${error.message}</p>`;
+            });
     </script>
 </body>
 </html>
