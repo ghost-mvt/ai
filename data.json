@@ -1,1 +1,10 @@
-data.json
+[
+  {
+    "username": "root",
+    "password": "2004"
+  },
+  {
+    "username": "user1",
+    "password": "password123"
+  }
+]
